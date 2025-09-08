@@ -1,7 +1,7 @@
 name: Sync to Azure DevOps
+
 on:
   workflow_dispatch:
-on:
   push:
     branches:
       - main
@@ -13,33 +13,33 @@ jobs:
     env:
       AZURE_PAT: ${{ secrets.AZURE_PAT }}
 
-        steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Set up Git
-      run: |
-        git config --global user.name "GitHub Action"
-        git config --global user.email "action@github.com"
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
 
-    - name: Add Azure DevOps remote
-      run: |
-        git remote add azure https://$AZURE_PAT@dev.azure.com/SimplifyHealthcare/SimplifyX/_git/TestAZGitSycRepo
-        git fetch azure
+      - name: Add Azure DevOps remote
+        run: |
+          git remote add azure https://$AZURE_PAT@dev.azure.com/SimplifyHealthcare/SimplifyX/_git/TestAZGitSycRepo
+          git fetch azure
 
-    - name: Ensure repository is not shallow
-      run: |
-        if [ -f .git/shallow ]; then
-          git fetch --unshallow
-        fi
+      - name: Ensure repository is not shallow
+        run: |
+          if [ -f .git/shallow ]; then
+            git fetch --unshallow
+          fi
 
-    - name: Fetch all branches from origin and azure remotes
-      run: |
-        git fetch --all
-        git fetch azure --prune
+      - name: Fetch all branches from origin and azure remotes
+        run: |
+          git fetch --all
+          git fetch azure --prune
 
-    - name: Push to Azure DevOps develop branch
-      run: |
-        git push azure HEAD:develop --force
+      - name: Push to Azure DevOps develop branch
+        run: |
+          git push azure HEAD:develop --force
