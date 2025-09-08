@@ -23,7 +23,7 @@ jobs:
 
     - name: Add Azure DevOps remote
       run: |
-        git remote add azure https://$AZURE_PAT@dev.azure.com/SimplifyHealthcare/SimplifyX/_git/TestSycRepo
+        git remote add azure https://$AZURE_PAT@dev.azure.com/SimplifyHealthcare/SimplifyX/_git/TestAZGitSycRepo
         git fetch azure
 
     - name: Push to Azure DevOps develop branch
