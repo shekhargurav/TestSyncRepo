@@ -13,8 +13,10 @@ jobs:
       AZURE_PAT: ${{ secrets.AZURE_PAT }}
 
     steps:
-    - name: Checkout GitHub repo
+    - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Set up Git
       run: |
@@ -25,7 +27,13 @@ jobs:
       run: |
         git remote add azure https://$AZURE_PAT@dev.azure.com/SimplifyHealthcare/SimplifyX/_git/TestAZGitSycRepo
         git fetch azure
-
+  
+    - name: Ensure repository is not shallow
+    run: |
+     if [ -f .git/shallow ];  then
+      git fetch --unshallow
+     fi
+    
     - name: Push to Azure DevOps develop branch
       run: |
         git push azure HEAD:develop --force
