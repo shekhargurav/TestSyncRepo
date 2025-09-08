@@ -1,5 +1,6 @@
 name: Sync to Azure DevOps
-
+on:
+  workflow_dispatch:
 on:
   push:
     branches:
